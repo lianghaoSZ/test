@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>租赁平台</title>
+    <link rel="stylesheet" href="../vendor/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../vendor/ligerUI/skins/Aqua/css/ligerui-all.css"/>
+    <link rel="stylesheet" href="../css/public/ligerui-custom.css"/>
+    <link rel="stylesheet" href="../css/public/page_index.css"/>
+</head>
+<body>
+    <div class="site-header">
+        <a class="logo"></a>
+        <ul class="infos">
+            <li>欢迎你！</li>
+            <li><i class="icon-user"></i> 赛格导航管理员</li>
+            <li><a href=""><i class="icon-close"></i> 退出</a></li>
+        </ul>
+    </div>
+    <div class="site-main">
+        <ul class="main-menu">
+            <li class="main-item active">
+                <a class="main-link" onclick="SiteTab.newTab('home','首页',0,true)"><i class="icon-menu1"></i>首页</a>
+            </li>
+            <li class="main-item">
+                <a class="main-link" onclick="SiteTab.newTab('carMonitor.html','车辆监控',0,true)"><i class="icon-menu2"></i>车辆监控</a>
+            </li>
+            <li class="main-item">
+                <a class="main-link"><i class="icon-menu3"></i>专属统计</a>
+                <ul class="sub-menu">
+<<<<<<< .mine
+                    <li class="selected"><a onclick="SiteTab.newTab('data-list-tree-example.html','高危区域报警统计',0,true)"><span>5天无数据统计</span></a></li>
+                    <li><a onclick="SiteTab.newTab('data-list-tree-example.html','高危区域报警统计',0,true)"><span>高危区域报警统计</span></a></li>
+                    <li><a onclick="SiteTab.newTab('data-list-tree-example.html','15天超距离报警统计',0,true)"><span>15天超距离报警统计</span></a></li>
+                    <li><a onclick="SiteTab.newTab('data-list-tree-example.html','驶出行政区域报警统计',0,true)"><span>驶出行政区域报警统计</span></a></li>
+                    <li><a onclick="SiteTab.newTab('data-list-tree-example.html','常跑路线分析统计',0,true)"><span>常跑路线分析统计</span></a></li>
+                    <li><a onclick="SiteTab.newTab('data-list-tree-example.html','常跑热点分析统计',0,true)"><span>常跑热点分析统计</span></a></li>
+                    <li><a onclick="SiteTab.newTab('data-list-tree-example.html','TRG90异常上报统计',0,true)"><span>TRG90异常上报统计</span></a></li>
+                    <li><a onclick="SiteTab.newTab('data-list-tree-example.html','里程统计',0,true)"><span>里程统计</span></a></li>
+                    <li><a onclick="SiteTab.newTab('data-list-tree-example.html','车辆贷款到期日录入及统计',0,true)"><span>车辆贷款到期日录入及统计</span></a></li>
+||||||| .r155694
+                    <li class="selected"><a>5天无数据统计</a></li>
+                    <li><a>高危区域报警统计</a></li>
+                    <li><a>15天超距离报警统计</a></li>
+                    <li><a>驶出行政区域报警统计</a></li>
+                    <li><a>常跑路线分析统计</a></li>
+                    <li><a>常跑热点分析统计</a></li>
+                    <li><a>TRG90异常上报统计</a></li>
+                    <li><a>里程统计</a></li>
+                    <li><a>车辆贷款到期日录入及统计</a></li>
+=======
+                    <li class="selected"><a>5天无数据统计</a></li>
+                    <li><a>常跑路线分析统计</a></li>
+                    <li><a>常跑热点分析统计</a></li>
+                    <li><a>TRG90异常上报统计</a></li>
+                    <li><a>里程统计</a></li>
+                    <li><a>车辆贷款录入及统计</a></li>
+                    <li><a>高危区域报警统计</a></li>
+                    <li><a>15天超距离报警统计</a></li>
+                    <li><a>驶出行政区域报警统计</a></li>
+>>>>>>> .r155714
+                </ul>
+            </li>
+            <li class="main-item">
+                <a class="main-link"><i class="icon-menu4"></i>警情信息</a>
+                <ul class="sub-menu">
+                <li><a onclick="SiteTab.newTab('alarm.html','警情',0,true)"><span>警情</span></a></li>
+                </ul>
+            </li>
+            <li class="main-item">
+                <a class="main-link"><i class="icon-menu4"></i>日志查询</a>
+                <ul class="sub-menu">
+                    <li><a><span>指令下发统计</span></a></li>
+                    <li><a><span>用户登退陆统计</span></a></li>
+                </ul>
+            </li>
+            <li class="main-item">
+                <a class="main-link"><i class="icon-menu5"></i>信息管理</a>
+                <ul class="sub-menu">
+                    <li><a onclick="SiteTab.newTab('operatorManager.html','操作员管理',0,true)"><span>操作员管理</span></a></li>
+                    <li><a onclick="SiteTab.newTab('vehicleManager.html','车辆管理',0,true)"><span>车辆管理</span></a></li>
+                    <li><a onclick="SiteTab.newTab('orgManager.html','机构管理',0,true)"><span>机构管理</span></a></li>
+                    <li><a onclick="SiteTab.newTab('vehicleLoanManager.html','区域管理',0,true)"><span>区域管理</span></a></li>
+                </ul>
+            </li>
+            <li class="main-item">
+                <a class="main-link"><i class="icon-menu5"></i>数据统计</a>
+                <ul class="sub-menu">
+                    <li><a onclick="SiteTab.newTab('alarmJcgjd.html','进出关键点',0,true)"><span>进出关键点</span></a></li>
+                    <li><a onclick="SiteTab.newTab('lastLocation.html','最近未上报',0,true)"><span>最近未上报</span></a></li>
+                    <li><a onclick="SiteTab.newTab('sendCmd.html','指令信息',0,true)"><span>指令信息</span></a></li>
+                </ul>
+            </li>
+            <li class="main-item">
+                <a class="main-link"><i class="icon-menu6"></i>设置</a>
+                <ul class="sub-menu">
+                    <!--<li><a onclick="SiteTab.newTab('alarmRemindRules.html','警情提醒规则',0,true)">警情提醒规则</a></li>-->
+                    <li><a><span>修改密码</span></a></li>
+                    <li><a><span>指令权限设置</span></a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="contents">
+            <div class="site-tab l-tab-custom">
+<!--                 <div title="常跑路线分析统计"  showclose="true"> -->
+<!--                     <iframe src="data-list-tree-map-example.html"></iframe> -->
+<!--                 </div> -->
+<!--                 <div title="新增保单" tabid="add-warranty" showclose="true"> -->
+<!--                     <iframe src="data-list-tree-example.html"></iframe> -->
+<!--                 </div> -->
+                <div title="首页" tabid="home">
+                    <iframe src="home.html"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../vendor/jquery/dist/jquery.min.js"></script>
+    <script src="../vendor/ligerUI/js/ligerui.all.js"></script>
+    <script src="../js/page/index.js"></script>
+</body>
+</html>
