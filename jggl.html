@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>赛格导航租赁大平台</title>
+    <link rel="stylesheet" href="../vendor/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../vendor/ligerUI/skins/Aqua/css/ligerui-all.css"/>
+    <link rel="stylesheet" href="../css/public/ligerui-custom.css"/>
+    <link rel="stylesheet" href="../css/public/search-list-grid-tree.css"/>
+    <script src="../vendor/jquery/dist/jquery.js"></script>
+
+    <script src="../vendor/ligerUI/js/ligerui.all.js"></script>
+    <script src="../js/plugins/DataToView.js"></script>
+    <script src="../js/plugins/ligerui.other.js"></script>
+
+    <!-- 添加 foundation-datepicker 支持-->
+    <link rel="stylesheet" href="../vendor/foundation-datepicker/css/foundation-datepicker.min.css"/>
+    <link rel="stylesheet" href="../vendor/font-awesome/css/font-awesome.min.css"/>
+    <script src="../vendor/foundation-datepicker/js/foundation-datepicker.min.js"></script>
+    <script src="../vendor/foundation-datepicker/js/locales/foundation-datepicker.zh-CN.js"></script>
+
+    <style>
+        .refresh{
+            background: url(../images/refreshBg.png) no-repeat 0 3px;
+            width: 50px;
+            height: 20px;
+            display: inline-block;
+            padding-left: 20px;
+            text-decoration: none;
+            outline: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        a:hover{
+            text-decoration: none;
+        }
+        .add{
+            display: none;
+            font-size: 14px;
+            font-family: '微软雅黑';
+        }
+        /*add样式修改*/
+        .l-dialog-tl{
+            height:42px;
+        }
+        .l-dialog-tc{
+            padding-left: 59px;
+            /*border-top: 2px solid #fff;*/
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            background: none;
+            background-color: #efefef;
+        }
+        .l-dialog td ,#add-form label{
+            font-size: 14px;
+            font-family: '微软雅黑';
+            font-weight: normal;
+            color:#343f56;
+        }
+        .l-dialog-max,.l-dialog-collapse{
+            display: none;
+        }
+        .l-dialog-close{
+            background: url(../images/close.png) no-repeat;
+            width: 22px;
+            height: 22px;
+            position: absolute;
+            top: -28px;
+            right: -22px;
+        }
+        .l-dialog-close:hover{
+            background: url(../images/closeHover.png) no-repeat;
+        }
+        #add-dialog  .form-control{
+            width: 200px;
+            height: 30px;
+            display: inline-block;
+        }
+        #add-form label{
+            width:104px;
+            text-align: right;
+        }
+        #add-dialog{
+            margin-top: 26px;
+        }
+        #add-dialog .form-group{
+            margin-bottom: 8px;
+        }
+        .save{
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            height: 62px;
+            background-color: #efefef;
+            width: 100%;
+            text-align: center;
+        }
+        .save button{
+            margin-top: 15px;
+            width: 70px;
+            height: 30px;
+            border-color: #40c5e1;
+            background-color: #40c5e1;
+            line-height: 1;
+            outline: none;
+        }
+        #addSubmit{
+            margin-right: 38px;
+        }
+        .l-dialog-cc,.l-dialog-body{
+            border-bottom-left-radius:8px;
+            border-bottom-right-radius:8px;
+        }
+        .l-dialog-cc{
+            border-top: none;
+        }
+        .l-dialog-win,.l-dialog{
+            border: none;
+        }
+        .l-window-mask{
+            background: none;
+            background: url(../images/Bgmask.png);
+            opacity: 1;
+        }
+        #add-form{
+            height: 486px;
+            overflow: auto;
+            width: 1054px;
+        }
+        #add-form .content1  .contentLeft{
+            float: left;
+            width: 80px;
+            text-align: right;
+            color: #40c5e1;
+            font-size: 14px;
+            font-family: '微软雅黑';
+            line-height: 30px;
+        }
+        .content1{
+            margin-bottom: 20px;
+        }
+        .contentAll{
+            margin-left: 80px;
+        }
+        #add-dialog .form-group select.form-control{
+            height: 30px;
+            vertical-align: top;
+            padding: 0 12px;
+        }
+        .contentAll span{
+            font-size: 14px;
+            font-family: '微软雅黑';
+            color: #858995;
+            display: inline-block;
+        }
+        .zjbh{
+            width: 12px;
+        }
+        #add-dialog .form-group .form-control.dotted{
+            border: 1px dotted #ccc;
+            width: 124px;
+            text-align: center;
+            margin-left: 12px;
+            margin-right: 12px;
+        }
+        #add-dialog .form-group .form-control.width156{
+            width: 156px;
+        }
+        .zjzjzl,.sczjzl,.zjsjzl,.scsjzl{
+            display: inline-block;
+            vertical-align: text-bottom;
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            margin-left: 6px;
+            position: relative;
+            top:2px;
+        }
+        .jfxxInfo{
+            display: inline-block;
+        }
+        #add-dialog .jfxxInfo label{
+            margin-left: 3px;
+            width: auto;
+        }
+         #add-dialog .jfxxInfo  input{
+            width: 100px;
+        }
+        .jfxxInfo .form-control-feedback{
+            display: none;
+        }
+        .w120{
+            width: 120px;
+        }
+        #add-form::-webkit-scrollbar{width:8px;height: 4px;position: absolute;right: 4px;}
+        #add-form::-webkit-scrollbar-track{background-color:#e6e6e6;-webkit-border-radius: 4px;border-radius: 4px;}
+        #add-form::-webkit-scrollbar-thumb{background-color:#b3b3b3;-webkit-border-radius: 4px;border-radius: 4px;}
+        #add-form::-webkit-scrollbar-thumb:hover {background-color:#b3b3b3;}
+        #add-form::-webkit-scrollbar-thumb:active {background-color:#b3b3b3;}
+    </style>
+    <script>
+        $(function(){
+            var treeToggleButton = $('.tree-toggle-button');
+            var body = $('body');
+            treeToggleButton.on('click',function(e){
+               if(treeToggleButton.hasClass('show')){
+                   treeToggleButton.removeClass('show');
+                   body.removeClass('hide-tree');
+               }else{
+                   treeToggleButton.addClass('show');
+                   body.addClass('hide-tree');
+               }
+                setTimeout(function(){
+                    $(window).trigger('resize');
+                },500);
+            });
+        });
+        $(function (){
+                window.tree=$("#tree").ligerTree({
+                url:'../twgAgency/queryTreeRootNode',
+                nodeWidth:200,
+                checkbox: false,
+                slide: false,
+                btnClickToToggleOnly: false,
+                isExpand: false,
+                idFieldName : 'treedataindex',
+                onSelect : function(node) {
+                    console.log(node);
+                    var data = node.data;
+                    // if (data.delay !== undefined)return;
+                    changeURL(node.data.params.attributesPath);
+                    $("#add-dialog input[name='parentAgencyId']").prop('value',data.params.id);
+                    // $("#add-dialog input[name='agencyName']").prop('value',data.params.text);
+                },
+                isLeaf: function(data) {
+                    return !(data.delay !== undefined || data.children !== undefined);
+                },
+                onExpand : function(e) {
+                    this._parentNode = e.target;
+                },
+                onError:function(XMLHttpRequest, textStatus, errorThrown){
+                    console.log(arguments);
+                },
+                onSuccess : function(newdata) { 
+                    var parentNode = this._parentNode;
+                    var menuData = [];
+                    var parent = $(parentNode);
+                    var parentData = this.getDataByID(parent.attr('treedataindex'));
+                    if(parentData === null){
+                        // 父节点为空时（即该节点为根节点时）
+                        $(newdata.datas).each(function() {
+                            menuData.push({
+                                text:this.text,
+                                delay:{url:'../ twgAgency/queryTreeNodeList'+'?&nodeId='+this.id},
+                                params : this
+                            });
+                        })
+                        console.log(newdata.datas);
+                        if(newdata.datas){
+                            changeURL(newdata.datas.attributesPath);
+                        }
+                    }else{
+                        //该节点有父节点，不为根节点时
+                        $(newdata.datas.list).each(function() {
+                            var leaf={text:this.text,delay:{url:'../ twgAgency/queryTreeNodeList'+'?&nodeId='+this.id},params : this};
+                            if(this.isLeaf){
+                                delete leaf.delay;
+                            }
+                            menuData.push(leaf);
+                        })
+                    }
+                    console.log(1);
+                    if (menuData.length <= 0)return;
+                    this.append(this._parentNode, menuData);
+                    if(parentData) delete parentData.delay;
+                 }
+            });
+        });
+        function changeURL(data){
+            var formParam={};
+            formParam.page = 1;
+            formParam.pagesize = 20;
+            formParam.attributesPath=data;
+            mainGrid.setParm('attributesPath',data);
+           $("#main-grid").ligerGetGridManager().loadServerData(formParam);
+        }
+        // jgglTree.enterpriseTree._parentNode = null;
+        // jgglTree.enterpriseTree.getDataByID = _getDataByID;
+    </script>
+    <script>
+        $(function () {
+            var data = $.parseJSON('{"message":null,"data":{"count":12,"list":[{"name":"交警","remark":"交警部门备注","value":1},{"name":"运输企业","remark":"运输企业备注","value":2},{"name":"车辆协会","remark":"车辆协会备注","value":3},{"name":"旅游运输企业","remark":null,"value":4},{"name":"校车企业","remark":null,"value":5},{"name":"道路客运企业","remark":null,"value":6},{"name":"公交出租企业","remark":null,"value":7},{"name":"危险品运输企业","remark":null,"value":8},{"name":"普通货运企业","remark":null,"value":9},{"name":"泥头车运输企业","remark":null,"value":10},{"name":"租赁企业","remark":null,"value":11},{"name":"其它","remark":null,"value":12}]},"success":true}');
+            data.list = data.data.list;
+            data.count = data.data.count;
+            window.gridParms = {
+                data: data,
+                onLoaded: function (grid) {
+                    setTimeout(function () {
+                        $('.l-grid-loading').hide();
+                        $(".l-grid-row-cell-inner").each(function () {
+                            var that = $(this);
+                            that.attr('title', that.text());
+                        })
+                    }, 200);
+                },
+                //工具栏
+                toolbar: {
+                    items: [
+                        { text: '添加', click: addRow, icon: 'add'},
+                        { text: '删除', id:'excel',click: '', icon: 'delete'},
+                        { text: '修改', click: '', icon: 'xiugai'}
+                    ]
+                },
+                onError: function (XMLHttpRequest, textStatus, errorThrown) {
+                },
+                width: '100%',
+                parms: [],
+                height: '100%',
+                rownumbers :false,
+                selectable:false
+
+            };
+            //添加操作选项
+            var optcol = [];
+            window.mainGrid = initMainGrid('main-grid', gridParms, optcol.concat(D2V.clgl));
+
+            //点击添加按钮事件，主动触发。
+            $('#addSubmit').on('click',function(e){
+            	/**
+            	* 此处做表单判断
+            	*/
+                $('#add-form').trigger('submit');
+            });
+            //添加提交表单，与后台交互。
+            $('#add-form').submit(function(e){
+                e.preventDefault();
+                //终端母机条形码信息
+    			var barcodes =  new Array();
+    			var barcodeids = $('input[name=barcodeid]');
+    			var content = $('input[name=content]');
+    			var bcType = $('input[name=bc_type]');
+    			var obj = {};
+    			obj.id = barcodeids.val();
+            	obj.bc_type = bcType.val();
+            	obj.content = content.val();
+            	barcodes.push(obj);
+            	
+            	//终端子机条形码信息
+    			var sonBarcodes =  new Array();
+    			var sonBarcodeids = $('input[name=son_barcodeid]');
+    			var sonContents = $('input[name=son_content]');
+    			var sonBcTypes = $('input[name=son_bc_type]');
+    			sonBcTypes.each(function(k,v){
+    				var sonObj = {};
+        			sonObj.id = sonBarcodeids[k].value;
+        			sonObj.bc_type = sonBcTypes[k].value;
+        			sonObj.content = sonContents[k].value;
+                	sonBarcodes.push(sonObj);
+    			});
+    			
+            	
+    			//司机信息
+    			var drivers = new Array();
+    			var driver_ids = $('input[name=driver_id]');
+    			var driver_codes = $('input[name=driver_code]');
+    			var driver_names = $('input[name=driver_name]');
+    			var phones = $('input[name=phone]');
+    			
+    			var r = true;
+    			driver_codes.each(function(k,v){
+    				var obj = {};
+    				obj.driver_id = (driver_ids[k] == undefined ? 0 :driver_ids[k].value);
+    	        	obj.driver_code = (driver_codes[k] == undefined ? "": driver_codes[k].value);
+    	        	obj.driver_name = (driver_names[k] == undefined ? "": driver_names[k].value);
+    	        	obj.phone = (phones[k] == undefined ? "": phones[k].value);
+    	        	if(obj.phone!=''&&obj.driver_name==''){
+    	        		r = false;
+    	        		return false;
+    	        	}
+    	        	drivers.push(obj);
+    			});
+    			if(!r){
+    				$(document).sgPup({message:'message_alert',text: '司机姓名不能填写为空.'});
+    				return false;
+    			}
+    			//子机基础资料信息
+    			var sonsInfo=new Array();
+    			var son_unit_ids=$('input[name=son_unit_id]');
+    			var son_unit_id_numbers=$('input[name=son_unit_id_number]');
+    			var son_call_letters=$('input[name=child_call_letter]');
+    			
+    			var r=true;
+    			child_nos.each(function(k,v){
+    				var obj={};
+    				obj.child_unit_id=(child_unit_ids[k] == undefined ? 0: child_unit_ids[k].value);
+    				obj.child_no=(child_nos[k].value);
+    				obj.child_bartype=1;//类型默认为"终端条形码"
+    				obj.content="SEG-9888";
+    				obj.child_call_letter=(child_call_letters[k] == undefined ? "": child_call_letters[k].value);
+    				if(obj.child_call_letter==''){
+    					r = false;
+    	        		return false;
+    				}
+    				childsInfo.push(obj);
+    			});
+    			if(!r){
+    				$(document).sgPup({message:'message_alert',text: '子机终端号码不能为空.'});
+    				return false;
+    			}
+    			
+    			var serviceInfo = {};
+    			var simfeeInfo = {};
+    			
+    			//服务费
+    			serviceInfo.fee_date = $('#service_start_time1').val();//开始日期
+    			serviceInfo.month_fee = $('#price1').val();//每月应缴
+    			serviceInfo.already_fee_months = $('#already_fee_months1').val();//已缴费时长
+    			
+    			//母机SIM卡费用
+    			simfeeInfo.fee_date = $('#service_start_time2').val();//开始日期
+    			simfeeInfo.month_fee = $('#price2').val();//每月应缴
+    			simfeeInfo.already_fee_months = $('#already_fee_months2').val();//已缴费时长
+    			simfeeInfo.month_gprs=$('#month_gprs').val();//已缴费时长SIM卡流量套餐(M/月)
+    			
+    			//子机SIM卡费用
+    			var childsSIMFee=new Array();
+    			var child_sim_start_date=$('input[name=child_sim_start_date]');//开始日期
+    			var child_price_month=$('input[name=child_price_month]');//每月应缴
+    			var child_already_fee_months=$('input[name=child_already_fee_months]');//已缴费时长
+    			var child_month_gprs=$('input[name=child_month_gprs]');//SIM卡流量套餐(M/月)
+    			
+    			child_sim_start_date.each(function(k,v){
+    				var obj={};
+    				obj.child_sim_start_date=child_sim_start_date[k].value;
+    				obj.child_price_month=child_price_month[k].value;
+    				obj.child_already_fee_months=child_already_fee_months[k].value;
+    				obj.child_month_gprs=child_month_gprs[k].value;
+    				childsSIMFee.push(obj);
+    			});
+    			//表单提交
+    			$.ajax({
+    				type : 'post',
+    				async : false,
+    				contentType : 'application/json',
+    				dataType : 'json',
+    				url : '../../zuLinLargecustNetwork',
+    				data : JSON.stringify({
+    					//此处要取出当前选择机构对应的
+    					cust_id : $('#cust_id').val(),
+    					vehicle_id : $('#vehicle_id').val(),
+    					unit_id : $('#unit_id').val(),
+    					number_plate : $('#number_plate').val(),
+    					plate_color : $('#plate_color option:selected').val(),
+    					code : $('#vehicle_code').val(),
+    					engine_no : $('#engine_no').val(),
+    					cartype : $('#model_id').val(),
+    					cartype_name : $('#model').val(),
+    					color : $('#color').val(),
+    					server_pwd : $("#server_pwd").val()==''?'123456':$('#server_pwd').val(),
+    					vl_remark : $('#vl_remark').val(),
+    							
+    					unittype_id : $('#unittype_id').val(),
+    					mode : $("input[name='mode']:checked").val(),
+    					call_letter : $('#call_letter').val(),
+    					operators : $("input[name='operators']:checked").val(),
+    					simtype : $("input[name='simtype']:checked").val(),
+    					worker : $('#worker').val(),	
+    					area : $('#area').val(),
+    					time : $('#time').val(),
+    					install_location : $('#install_location').val(),
+    					
+    					barcodes : barcodes,
+    					serviceInfo : serviceInfo,
+    					simfeeInfo : simfeeInfo,
+    					drivers : drivers,
+    					childsInfo : childsInfo,
+    					childsSIMFee : childsSIMFee
+    				}),
+    				success : function(data) {
+    					 if(data.success===true){
+                            $.ligerDialog.success('提交成功!');
+                            closeDialog('add-dialog');
+                            mainGrid.reload();
+                        }else{
+                            $.ligerDialog.error(data.message);
+                        }
+    				},
+    				error : function(xhr,status,err) {
+    					 console.log(status,err)
+                        $.ligerDialog.error('提交失败，网络故障!');
+                        return;
+    				}
+    			});
+            });
+        });
+        function renderOpt(rowdata, index, value) {
+            var str = '';
+            str += '<a href="javascript:;" class="operate" onclick="updateRow(' + index + ')">详情</a>';
+            str += '<a href="javascript:;" class="operate" onclick="updateRow(' + index + ')">修改</a>';
+            str += '<a href="javascript:;" class="operate delete" onclick="updateRow(' + index + ')">删除</a>';
+            return str;
+        }
+        function addRow(){
+            // clearForm('add-form',{});
+            openDialog('add-dialog',{title:'新增车辆资料',width:1080,height:620},function dialog(){});
+        }
+    </script>
+</head>
+<body>
+    <!-- 搜索 -->
+    <a class="tree-toggle-button"></a>
+    <div class="tree-layout">
+        <div class="form-group has-feedback search">
+            <input type="text" class="form-control" placeholder="请输入机构名称">
+            <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+        </div>
+       <!--  树 -->
+        <div id="tree" class="l-tree-custom"></div>
+    </div>
+    <!-- 表格 -->
+    <div class="data-list">
+        <div id="main-grid" class="l-grid-custom panel-bar-split"></div>
+    </div>
+    <!-- 新增 -->
+    <div id="add-dialog" class="add">
+        <form id="add-form">
+        	<input type='hidden' id='customer_id' name=''customer_id'' >
+    		<input type='hidden' id='vehicle_id' name='vehicle_id' >
+    		<input type='hidden' id='unit_id' name='unit_id' >
+    		
+            <div class="content1">
+                <div class="contentLeft">车辆资料</div>
+                <div class="contentAll">
+                    <div class="form-group">
+                        <label>车牌号码：</label>
+                        <input type="text" class="form-control" name="number_plate">
+                        <label>车牌颜色：</label>
+                        <input type="text" class="form-control" name="plate_color">
+                        <label>车辆颜色：</label>
+                        <input type="text" class="form-control" name="color">
+                    </div>
+                    <div class="form-group">
+                        <label>车辆识别号：</label>
+                        <input type="text" class="form-control" name="code">
+                        <label>发动机号：</label>
+                        <input type="text" class="form-control" name="engine_no">
+                        <label>车型：</label>
+                        <input type="text" class="form-control" name="cartype">
+                    </div>
+                    <div class="form-group">
+                        <label>服务密码：</label>
+                        <input type="text" class="form-control" name="server_pwd">
+                        <label>贷款日期：</label>
+                        <input type="text" class="form-control" name="loan_date">
+                        <label>结清日期：</label>
+                        <input type="text" class="form-control" name="square_date">
+                    </div>
+                    <div class="form-group">
+                        <label>备注：</label>
+                        <input type="text" class="form-control" name="remark2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="content1">
+                <div class="contentLeft">终端资料</div>
+                <div class="contentAll">
+                    <div class="form-group">
+                        <label>终端类型：</label>
+                        <select class="form-control" name="unittype_id"> 
+                            <option value="111">TRG30A</option> 
+                            <option value="133">TRG30B</option>
+                            <option value="1007">TRG80</option>
+                            <option value="1034">TRG90</option>
+                            <option value="1046">TZM30</option>  
+                        </select>
+                        <label>车载号码：</label>
+                        <input type="text" class="form-control" name="call_letter">
+                        <label>终端卡类型：</label>
+                        <select class="form-control" name="simtype"> 
+                            <option value="2">公司卡</option> 
+                            <option value="1">自带卡</option> 
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>入网地：</label>
+                        <input type="text" class="form-control" name="area">
+                        <label>通信模式：</label>
+                        <select class="form-control" name="mode"> 
+                            <option value="2">数据流量</option> 
+                            <option value="1">短信</option> 
+                            <option value="3">数据流量+短信</option> 
+                        </select>
+                        <label>卡运营商：</label>
+                        <select class="form-control" name="telecom"> 
+                            <option value="1">移动</option> 
+                            <option value="2">联通</option> 
+                            <option value="3">电信</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>安装电工：</label>
+                        <input type="text" class="form-control" name="worker">
+                        <label>安装位置：</label>
+                        <input type="text" class="form-control" name="install_location">
+                        <label>安装时间：</label>
+                        <input type="text" class="form-control" name="fix_time">
+                    </div>
+                    <div class="form-group">
+                        <label>条形码：</label>
+                        <input type='hidden' id="barcodeid" name='barcodeid' />
+                        <select class="form-control" name="bc_type"> 
+                           <option value="1">终端条形码</option>
+                        </select>
+                        <input type="text" class="form-control dotted" value="SEG-9888" disabled>
+                        <input type="text" class="form-control width156" name="content">
+                    </div>
+                </div>
+            </div>
+
+            <div class="content1">
+                <div class="contentLeft">子机资料</div>
+                <div class="contentAll">
+                    <div class="form-group zjzlrow">
+                        <label>子机资料：</label>
+                        <input type='hidden' id='child_unit_id' name='son_unit_id' >
+                        <span>编号：</span>
+                        <input type='text' class="zjbh" value="1" name="son_unit_id_number" disabled>
+                        <span>条形码：</span>
+                        <select class="form-control w120" name="son_bc_type"> 
+                            <option value="1">终端条形码</option> 
+                        </select>
+                        <input type="text" class="form-control dotted"  value="SEG-9888" disabled>
+                        <input type="text" class="form-control width156" name="son_content">
+<<<<<<< .mine
+                        <img src="../images/addZJZL.png" title="增加子机资料" class="zjzjzl" />
+||||||| .r156423
+                        <img src="../images/addZJZL.png" title="增加子机资料" class="czzjzl" />
+=======
+                        <label>车载号码：</label>
+                        <input type="text" class="form-control" name="son_call_letter">
+                        <img src="../images/addZJZL.png" title="增加子机资料" class="czzjzl" />
+>>>>>>> .r156431
+                        
+                    </div>
+
+                    <div class="form-group zjzlrow">
+                        <label>子机资料：</label>
+                        <span>编号：</span>
+                        <input type='text' class="zjbh" value="2" name="son_unit_id_number" disabled>
+                        <span>条形码：</span>
+<<<<<<< .mine
+                        <select class="form-control w120" name="son_bc_type"> 
+||||||| .r156423
+                        <select class="form-control" name="son_bc_type"> 
+=======
+                        <input type='hidden' id="barcodeid" name='son_barcodeid' />
+                        <select class="form-control" name="son_bc_type"> 
+>>>>>>> .r156431
+                            <option value="1">终端条形码</option> 
+                        </select>
+                        <input type="text" class="form-control dotted"  value="SEG-9888" disabled>
+                        <input type="text" class="form-control width156" name="son_content">
+                        <img src="../images/deleteZJZL.png" title="删除该子机资料" class="sczjzl" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="content1">
+                <div class="contentLeft">司机资料</div>
+                <div class="contentAll">
+                    <div class="form-group">
+                        <input type='hidden' id='driver_id' name='driver_id' />
+                        <label>司机编号：</label>
+                        <input type="text" class="form-control" name="driver_code">
+                        <label>司机姓名：</label>
+                        <input type="text" class="form-control" name="driver_name">
+                        <label>联系电话：</label>
+                        <input type="text" class="form-control" name="phone">
+                        <img src="../images/addZJZL.png" title="增加司机资料" class="zjsjzl" />
+                    </div>
+                    <div class="form-group">
+                        <input type='hidden' id='driver_id' name='driver_id' />
+                        <label>司机编号：</label>
+                        <input type="text" class="form-control" name="driver_code">
+                        <label>司机姓名：</label>
+                        <input type="text" class="form-control" name="driver_name">
+                        <label>联系电话：</label>
+                        <input type="text" class="form-control" name="phone">
+                        <img src="../images/deleteZJZL.png" title="删除该司机资料" class="scsjzl" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="content1">
+                <div class="contentLeft">计费信息</div>
+                <div class="contentAll jfxx">
+                    <div class="form-group">
+                        <label>服务费：</label>
+                        <div class="jfxxInfo">
+                            <label>开始日期:</label>
+                            <input type="text" class="form-control jfTime" id="timeStart" name="service_fee_date">
+                            <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                            <label>每月应缴(元)：</label>
+                            <input type="text" class="form-control" name="service_month_fee">
+                            <label>已缴费时长(月)：</label>
+                            <input type="text" class="form-control" name="service_already_fee_months">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contentAll jfxx">
+                    <div class="form-group">
+                        <label>母机SIM卡：</label>
+                        <div class="jfxxInfo">
+                            <label>开始日期:</label>
+                            <input type="text" class="form-control jfTime" id="sim_service_fee_date" >
+                            <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                            <label>每月应缴(元)：</label>
+                            <input type="text" class="form-control" name="sim_service_month_fee">
+                            <label>已缴费时长(月)：</label>
+                            <input type="text" class="form-control" name="sim_service_already_fee_months">
+                            <label>SIM卡流量套餐(M/月)：</label>
+                            <input type="text" class="form-control" name="sim_month_gprs">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contentAll jfxx">
+                    <div class="form-group">
+                        <label>子机1 SIM卡：</label>
+                        <div class="jfxxInfo">
+                            <label>开始日期:</label>
+                            <input type="text" class="form-control jfTime" id="son_sim_service_fee_date" >
+                            <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                            <label>每月应缴(元)：</label>
+                            <input type="text" class="form-control" name="son_sim_service_month_fee">
+                            <label>已缴费时长(月)：</label>
+                            <input type="text" class="form-control" name="son_sim_service_already_fee_months">
+                            <label>SIM卡流量套餐(M/月)：</label>
+                            <input type="text" class="form-control" name="son_sim_month_gprs">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contentAll jfxx">
+                    <div class="form-group">
+                        <label>子机2 SIM卡：</label>
+                        <div class="jfxxInfo">
+                            <label>开始日期:</label>
+                            <input type="text" class="form-control jfTime" id="son_sim_service_fee_date" >
+                            <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>
+                            <label>每月应缴(元)：</label>
+                            <input type="text" class="form-control" name="son_sim_service_month_fee">
+                            <label>已缴费时长(月)：</label>
+                            <input type="text" class="form-control" name="son_sim_service_already_fee_months">
+                            <label>SIM卡流量套餐(M/月)：</label>
+                            <input type="text" class="form-control" name="son_sim_month_gprs">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="save">
+                <button type="button" class="btn btn-primary " id="addSubmit">保存</button>
+                <button type="reset" class="btn btn-primary">重置</button>
+            </div>
+         </form>
+    </div>
+    <script>
+        $(function(){
+            $('.zjzjzl').click(function(){
+                var clone=$(this).parent().clone();
+                $(this).parent().parent().append(clone);
+                var node=$('.zjzlrow');
+                changeRow(node);
+            })
+            $('.sczjzl').click(function(){
+                $(this).parent().remove();
+                var node=$('.zjzlrow');
+                changeRow(node);
+            });
+            function changeRow(node){
+                node.each(function(i,elem){
+                    if(i>0){
+                        $(elem).find('.zjbh').val(i+1);
+                        $(elem).find('img').attr('src','../images/deleteZJZL.png');
+                        $(elem).find('img').attr('class','sczjzl');
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+</html>
