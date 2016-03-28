@@ -1,0 +1,539 @@
+<!doctype html>
+<html>
+	<head>
+		<title>百度前端作业</title>
+		<meta charset="utf-8">
+		<style>
+			ul{
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}		
+			#text {
+				
+			}
+
+			#text-wrap {
+				width: 300px;
+				height: auto;
+
+				overflow: hidden;
+				background: #f5f5f5;
+			}
+
+			#text-list {
+				width: 100%;
+			}
+
+			#text-list li {
+				width: 100%;
+				height: 30px;
+				
+				margin: 5px auto;
+				cursor: pointer;
+				color: rgba(0,0,0,0.8);
+				text-align: center;
+			}
+			#text-list li:hover {
+				background: #CCCCCC;
+			}
+		</style>
+		<script>
+	
+			// 检查数据类型
+			function ObjectTest (obj) {
+				var objType = Object.prototype.toString.call(obj);
+				var result = "";
+				switch(objType) {
+					case "[object Array]": 
+						return "Array";
+						break;
+					case "[object Function]": 
+						return "Function";
+						break;
+					case "[object Object]":
+						return "Object";
+						break;
+					case "[object String]": 
+						return "String";
+						break;
+					case "[object Number]": 
+						return "Number";
+						break;
+					case "[object RegExp]":
+						return "RegExp";
+						break;
+					default: console.log(objType);
+				}
+			}
+
+			// 深度clone 对象
+			var textobj = {
+				a: 1,
+				b: "owen",
+				c: [1,2,3],
+				d: {
+					"甲": "A",
+					"乙": "B",
+					"丙": "C"
+				},
+				e: function () {
+					console.log("Owen love Zyz");
+				},
+				f: /^Chapter [1-9][0-9]{0,1}$/
+			};
+			function cloneObject (obj) {
+				var a = {};
+				if(ObjectTest(obj) === "Object") {
+					for(var i in obj) {
+						var type = ObjectTest(obj[i]);
+						switch(type) {
+							case "Number":
+								var newNum = new Number();
+								newNum = obj[i];
+								a[i] = newNum;
+								break;
+							case "String":
+								var newString = new String();
+								newString = obj[i];
+								a[i] = newString;
+								break;
+							case "Array":
+								var newArray = new Array();
+								newArray = obj[i];
+								a[i] = newArray;
+								break;	
+							case "Object":
+								var newObj = new Object();
+								newObj = obj[i];
+								a[i] = newObj;
+								break;
+							case "Function":
+								var newFun = new Function();
+								newFun = obj[i];
+								a[i] = newFun;
+								break;
+							case "RegExp":
+								var newReg = new RegExp();
+								newReg = obj[i];
+								a[i] = newReg;
+								break;
+						}
+					}
+				}
+				return a;
+			}
+
+			var arr = [3,1,2,"owen",2,"owen",undefined,undefined];
+			function uniqArray (arr) {
+				var result = [], hash = {};
+				for (var i = 0, elem; (elem = arr[i]) != null; i++) {
+					
+					if (!hash[elem]) {
+						result.push(elem);
+						hash[elem] = true;
+					}
+				}
+				return result;
+			}
+
+			var sttttr = " 	  ow  en  		 　　";
+			function simpleTrim(str) {
+				var newStr = str.split("");
+				var f,e;
+				var result = [];
+				for( var i = 0 ; i<newStr.length ; i++ ) {
+					if(ObjectTest(newStr[i]) === "String" && newStr[i] != " ") {
+						f = i;
+						break;
+					}
+				}
+
+				for( var i = newStr.length - 1 ; i>=0 ; i-- ) {
+					if(ObjectTest(newStr[i]) === "String" && newStr[i] != " ") {
+						e = i;
+						break;
+					}
+				}
+				return str.substring(f , e+1);
+			}  
+			
+			var arr1 = ['java' , 'c' , 'php' , 'html'];
+			function output (item) {
+				console.log(item);
+			}
+
+			function each (arr , fn) {
+				var obj = {};
+				for(var i in arr) {
+					obj[i] = arr[i];
+					
+				}
+				fn(obj);
+			}
+
+			function getObjectLength(obj) {
+				var j = 0;
+				for( var i in obj ) {
+					j++;				
+				}
+				return j;
+			}
+
+			var obj = {
+				a: 1,
+				b: 2,
+				c: {
+					c1: 3,
+					c2: 4
+				}
+			};
+
+
+
+			var oElement = document.getElementById("div1");
+			function addClass(element , newClassName) {
+				var newClass = oElement.className.split(" ");	
+				for(var i in newClass) {
+					if( newClass[i] === newClassName ) {
+						return;
+					}
+				}
+
+				newClass.push(newClassName);
+
+				oElement.className = newClass.join(" ");
+			}
+
+			function removeClass(element , rmClassName) {
+				var EmClass = oElement.className.split(" ");
+				for( var i in EmClass ) {
+					if( EmClass[i] === rmClassName) {
+						EmClass.splice( i , 1 );
+					}
+				}
+
+				oElement.className = EmClass.join(" ");
+			}
+
+			var a = document.getElementById("a");
+			var b = document.getElementById("b");
+			function isSiblingNode (element,siblingNode) {
+				return (element.parentNode === siblingNode.parentNode);
+			}
+
+			function getPosition(element) {
+				var result = 0;
+				while (element) {
+					result += element.offsetTop;
+					element = element.offsetParent;
+				}
+				return result;
+			}
+
+			// select one Element
+			function $(selector) {
+				var aS = selector.split(" ");
+				if( aS.length === 1 ) {
+					return mainfn(selector);
+				}else {
+					var k = mainfn(aS[0]);
+					for( var i = 1 ; i < aS.length ; i++ ) {
+						k = mainfn(aS[i] , k);
+					}
+					return k
+				}
+
+				function mainfn (selector , parent) {
+					parent = parent || document;
+					var result = null;
+					switch(selector.substring(0,1)) {
+						case "#":
+							selector = selector.substring(1);
+							return result = findById( selector , parent );
+						case ".":
+							selector = selector.substring(1);
+							return result = findByClass( selector , parent );
+						case "[":
+							selector = selector.substring(1,selector.length-1);
+							if(selector.indexOf("=") === -1) {
+								return result = findByAttrName( selector , parent );
+							}else {
+								return result = findByAttrValue( selector , parent );
+							}
+						default :
+							return result = findByTagName( selector , parent );
+					}
+				}
+
+				function findByTagName ( tagName , parent ) {
+					return parent.getElementsByTagName(tagName)[0];
+				}
+
+				function findById ( targetId , parent ) {
+					return parent.getElementById( targetId );
+				}
+
+				function findByClass ( targetClass , parent ) {
+					var o = parent.getElementsByTagName("*");
+					for(var i = 0 ; i<o.length; i++) {
+						var aclass = o[i].className.split(" ");
+						for(var j = 0 ; j < aclass.length ; j++){
+							if( aclass[j] ===  targetClass) {
+								return o[i];
+							}
+						}
+					}
+				}
+
+				function findByAttrName ( targetAttr , parent ) {
+					var o = parent.getElementsByTagName("*");
+					for(var i = 0 ;i<o.length;i++) {
+						if (o[i].attributes.length === 0){continue;}
+						for(var j  = 0 ; j<o[i].attributes.length ; j++) {
+							if( o[i].attributes[j].name ===  targetAttr) {
+								return o[i];
+						    }
+						}
+					}
+				}
+
+				function findByAttrValue ( targetAttr , parent ) {
+					var o = parent.getElementsByTagName("*");
+					var AttrName = targetAttr.split("=");
+					for(var i = 0 ;i<o.length;i++) {
+						if (o[i].attributes.length === 0){continue;}
+						for(var j  = 0 ; j<o[i].attributes.length ; j++) {
+							if( o[i].attributes[j].name === AttrName[0] && o[i].attributes[j].value === AttrName[1] ) {
+								return o[i];
+							}
+						}
+					}
+				}
+			}
+
+			// create namespace
+			window.namespace = {};
+
+			// bind funs on name space
+			$.addnamespace = function( d , fn ) {
+				var k;
+				// 判断namespace中是否已经存在该事件
+				for( var i in window.namespace ) {
+					if( d[0] === i && !!d[1] ) {
+						k = window.namespace[i][d[1]] = fn;
+						return k;
+					}
+				}
+
+				// 若还未存在，创造这个对象
+				// 创建一个默认空间
+				window.namespace[d[0]] = {};
+				window.namespace[d[0]].default = null;
+				
+				if( !!d[1] ) {
+					// 如果带命名空间，丢入指定空间
+					k = window.namespace[d[0]][d[1]] = fn;
+				} else {
+					// 如果不带命名空间，丢入默认空间
+					k = window.namespace[d[0]].default = fn;
+				}
+
+				return k;
+			}
+
+			// unbind funs on name space
+			$.rmnamespace = function( d ) {
+				var r;
+				for( var i in window.namespace ) {
+					// 如果存在该属性
+					if(d[0] === i) {
+						// 判断是否是默认函数
+						if( !!d[1] ) {
+							for( var j in window.namespace[i] ) {
+								if( d[1] === j ) {
+									r = window.namespace[i][j];
+									delete window.namespace[i];
+									return r;
+								}
+							}
+						} else {
+							r = window.namespace[d[0]].default;
+							window.namespace[d[0]].default = null;
+							return r;
+						}
+					}
+				}	
+			}
+
+			function addEvent ( element , event , listener ) {
+				var events = event.split(" ");
+				for(var i = 0 ; i<events.length;i++) {
+					var d = events[i].split(".");
+					if( element.addEventListener ) {
+						element.addEventListener( d[0] , $.addnamespace( d , listener ) , false );
+					} else {
+						element.attachEvent( "on" + events[i] , function() {
+							$.addnamespace( d , listener ).call(element);
+						});
+					}
+				} 
+			}
+			
+			function removeEvent ( element , event ) {
+				var events = event.split(" ");
+
+				for( var i = 0 ; i<events.length ; i++ ) {
+					var d = events[i].split(".");
+					if( element.removeEventListener ) {
+						element.removeEventListener( d[0] , $.rmnamespace( d ) , false );
+					} else {
+						element.detachEvent("on" + event , $.rmnamespace( d ));
+					}
+					
+				}
+			}
+
+
+			function delegateEvent ( element , tag , eventName  , listener ) {
+				listener = listener || null;
+				addEvent( element , "click" , function(ev) {
+					var ev = ev || event;
+					if( ev.target && ev.target.nodeName === tag.toUpperCase() ) {
+						if(!!!listener) {
+							console.error("listener doesn't give the parameter");
+						}
+						// 如果是对应的标签，就执行该标签相应的函数
+						switch(Object.prototype.toString.call(listener)) {
+							case "[object Function]":
+								listener && listener();
+								break;
+							default: console.error("This listener is not a function");
+								return;
+						}
+					}
+				});
+			}
+
+			function undelegateEvent ( element , event ) {
+				removeEvent( element , event );			
+			}
+
+			// addEvent( $("#hd") , "click.aa" , function() {
+			// 	alert("ssssssssssss");
+			// } )
+			function setCookie ( name , value , expiredays ) {
+				expiredays  = expiredays || 1;
+
+				var oDate = new Date();
+				oDate.setDate( oDate.getDate() + expiredays );
+				document.cookie = name + "=" + value +  ";expires=" + oDate;
+			}
+
+			function getCookie(name)
+			{
+				var arr = document.cookie.split('; ');
+				var i = 0;
+
+				for(i = 0;i<arr.length;i++)		
+				{
+					/*arr2通过对arr1以 = 进行分离后 获得的是多个数组 arr2是多个数组组成的数组*/
+					var arr2 = arr[i].split('=');
+					
+					if(arr2[0] === name)
+					{
+						/*如果第 i 个数组的名字和要找的名字cookie名字相同的话 就返回对应的内容*/
+						return arr2[1];
+					}
+				}
+					return '';
+			}
+
+			function rmCookie(name) {
+				setCookie(name , '1' , -1);
+			}
+
+
+
+
+			var b=2;
+
+			window.onload = function() {
+				var data = {
+					a: ["apple"],
+					b: ["banana"],
+					c: ["case" , "cat"]
+				};
+
+				var text = $("#text");
+				var textWrap = $("#text-wrap");
+				var textList = $("#text-list");
+
+				function promptBoard ( iE , pE , sub ) {
+					sub =  sub || null;
+					this.iE = iE;
+					this.pE = pE;
+					this.sub = sub;
+					this.dataStack = ["s"];
+					b=this;
+				} 
+
+				promptBoard.prototype = {
+					constructor : promptBoard,
+					_query : function () {
+						console.log(this.iE); // 可以打印出来对象
+						console.log(this)// promptBoard 构造器
+						var $self = this;  
+						addEvent( text , "keyup.prompt-board" , function(ev) {
+						
+							if( text.value === "" ) {
+								return;
+							}
+							
+							var value = text.value.split("");
+							if ( value.length === 1 ) {
+								for( var i in data ) {
+									if(value[0] === i) {
+										// this.dataStack.push( text.value );
+										console.log( this.dataStack );
+										// _generate( _this.dataStack );
+									}
+									break;
+								}
+							}else {
+								for ( var i = 1; i < data[ this.dataStack[0] ].length ; i++ ) {
+									var dSplit = data[ this.dataStack ][i].split("");
+									for( var j = 0; j < value.length; j++ ) {
+										if( dSplit[j] !== value[j] ) {
+											break;
+										}
+									}
+
+									this.dataStack.push( text.value )
+								};
+							}
+							
+						});
+					},
+					_generate : function ( dS ) {
+						for( var i in dS ) {
+
+						}
+					},
+				}
+
+				window.a=new promptBoard( text , textList  );
+			}
+		</script>
+	</head>
+	<body>
+		<input id="text"  type="text" placeholder="请输入内容">
+		<div id="text-wrap">
+			<ul id="text-list">
+			</ul>
+		</div>
+	</body>
+</html>
+
+
+
